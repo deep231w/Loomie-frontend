@@ -1,14 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import JoinRoom from "../../components/joinRoom/JoinRoom";
 import axios from 'axios';
+import Room from "../../components/Room/Room";
 
 const Home= ()=>{
     const baseurl= import.meta.env.VITE_REACT_APP_BACKEND_URL;
     const user= JSON.parse(localStorage.getItem('user'));
+    const [room, setRoom]=useState();
+    const [inRoom,setInRoom]=useState(false);
+
     const isUserInAnyRoom= async()=>{
         try{
             const response= await axios.get(`${baseurl}/room/v2/currentroom/${user.id}`)
             console.log("response of check user room = ", response);
+            setRoom(response.data?.room);
+            setInRoom(response.data?.inRoom)
 
         }catch(e){
             console.log("error during get is joined room");
@@ -20,7 +26,7 @@ const Home= ()=>{
     
     return(
         <>
-            <JoinRoom/>
+            {inRoom? <Room room={room}/> :<JoinRoom/>}
         </>
     )
 }
