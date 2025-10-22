@@ -3,6 +3,7 @@ import Home from "./pages/home/Home";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/Signup";
 import ProtectedLayout from "./protectedRoute";
+import Room from "./components/Room/Room";
 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("token"); 
@@ -21,11 +22,18 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute>
                 <ProtectedLayout>
-                    <Home />
+                    <Home/>
                 </ProtectedLayout>
             </ProtectedRoute>
           }
         />
+        <Route path="/room" element={
+          <ProtectedRoute>
+                <ProtectedLayout>
+                    <Room/>
+                </ProtectedLayout>
+            </ProtectedRoute>
+        }/>
         <Route path="/login" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
       </Routes>
