@@ -1,9 +1,6 @@
 import YouTube from "react-youtube";
 import { useEffect, useRef, useState } from "react";
 import socket from "../../socket";
-import Navbar from "../Navbar/Navbar";
-import SpotifySection from "../spotifySection/SpotifySection";
-import YoutubeSection from "../youtubeSection/YoutubeSection";
 
 const Room = ({ room }) => {
   const playerRef = useRef(null);
@@ -75,25 +72,16 @@ const Room = ({ room }) => {
     }
   };
 
-  const [selectedSection, setSelectedSection] = useState(null);
-
-  const renderSection = () => {
-    switch (selectedSection) {
-      case "youtube":
-        return <YoutubeSection room={room}/>;
-      case "spotify":
-        return <SpotifySection />;
-      default:
-        return <YoutubeSection room={room}/>;
-    }
-  };
-
-
   return (
-    <>
-        <Navbar setSelectedSection={setSelectedSection}/> 
-        <div>{renderSection()}</div>
-    </>
+    <div className="flex flex-col items-center text-white">
+      <h2>Watch Together Room</h2>
+      <YouTube
+        videoId={videoId}
+        opts={opts}
+        onReady={onReady}
+        onStateChange={onStateChange}
+      />
+    </div>
   );
 };
 
