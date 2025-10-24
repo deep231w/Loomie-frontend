@@ -6,15 +6,21 @@ import SpotifySection from "../spotifySection/SpotifySection";
 import YoutubeSection from "../youtubeSection/YoutubeSection";
 import SidebarMenus from "../sidebarMenus/SidebarMenus";
 import ChatSection from "../chatSection/ChatSection";
+import { useParams } from "react-router-dom";
 
 const Room = ({ room }) => {
   const playerRef = useRef(null);
   const isRemoteAction = useRef(false); 
-  const roomId = room.id;
+  const { roomid } = useParams();
+  console.log("Joined room:", roomid);
   const videoId = "dQw4w9WgXcQ";
 
+  //check if user in the room or not -
+
+  
+
   useEffect(() => {
-    socket.emit("join_room", { roomId });
+    socket.emit("join_room", { roomid });
 
     socket.on("sync_state", ({ videoId, currentTime, isPlaying }) => {
       const player = playerRef.current;
@@ -44,7 +50,7 @@ const Room = ({ room }) => {
       socket.off("sync_state");
       socket.off("video_action");
     };
-  }, [roomId]);
+  }, [roomid]);
 
   const opts = {
     height: "390",
@@ -64,13 +70,13 @@ const Room = ({ room }) => {
 
     switch (event.data) {
       case 1: 
-        socket.emit("video_action", { roomId, action: "play", currentTime });
+        socket.emit("video_action", { roomid, action: "play", currentTime });
         break;
       case 2: 
-        socket.emit("video_action", { roomId, action: "pause", currentTime });
+        socket.emit("video_action", { roomid, action: "pause", currentTime });
         break;
       case 3: 
-        socket.emit("video_action", { roomId, action: "seek", currentTime });
+        socket.emit("video_action", { roomid, action: "seek", currentTime });
         break;
       default:
         break;
@@ -82,11 +88,11 @@ const Room = ({ room }) => {
   const renderSection = () => {
     switch (selectedSection) {
       case "youtube":
-        return <YoutubeSection room={room}/>;
+        return <YoutubeSection roomId={roomid}/>;
       case "spotify":
         return <SpotifySection />;
       default:
-        return <YoutubeSection room={room}/>;
+        return <YoutubeSection roomId={roomid}/>;
     }
   };
 
@@ -97,7 +103,7 @@ const Room = ({ room }) => {
 
     <div className="flex flex-row h-[90vh] mt-2">
       
-      <div className="w-[10vw] bg-gray-800 text-white p-2">
+      <div className="w-[10vw] bg-gray-800 text-white p-2 rounded-r-lg">
         <SidebarMenus />
       </div>
 
@@ -105,9 +111,10 @@ const Room = ({ room }) => {
         {renderSection()}
       </div>
 
-      <div className="w-[25vw] bg-gray-700 text-white p-4 overflow-y-auto">
+      <div className="w-[25vw] bg-gray-700 text-white  overflow-y-auto rounded-l-lg flex flex-col h-full">
         <ChatSection />
       </div>
+
     </div>
   </>
 

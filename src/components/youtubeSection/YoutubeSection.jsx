@@ -6,11 +6,9 @@ import axios from "axios";
 const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY; 
 const DEFAULT_VIDEO = "dQw4w9WgXcQ";
 
-export default function YoutubeSection({ room }) {
+export default function YoutubeSection({ roomId }) {
   const playerRef = useRef(null);
   const isRemoteAction = useRef(false);
-  const roomId = room.id;
-
   const [videoId, setVideoId] = useState(DEFAULT_VIDEO);
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(false);

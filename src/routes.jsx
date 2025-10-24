@@ -27,7 +27,7 @@ const AppRoutes = () => {
             </ProtectedRoute>
           }
         />
-        <Route path="/room" element={
+        <Route path="/room/:roomid" element={
           <ProtectedRoute>
                 <ProtectedLayout>
                     <Room/>

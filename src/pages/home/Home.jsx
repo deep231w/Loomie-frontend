@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import JoinRoom from "../../components/joinRoom/JoinRoom";
 import axios from 'axios';
 import Room from "../../components/Room/Room";
+import { useNavigate } from "react-router-dom";
 
 const Home= ()=>{
     const baseurl= import.meta.env.VITE_REACT_APP_BACKEND_URL;
     const user= JSON.parse(localStorage.getItem('user'));
     const [room, setRoom]=useState();
     const [inRoom,setInRoom]=useState(false);
+    const navigate = useNavigate();
+
 
     const isUserInAnyRoom= async()=>{
         try{
@@ -23,10 +26,18 @@ const Home= ()=>{
     useEffect(()=>{
         isUserInAnyRoom();
     },[])
+
+
+        useEffect(() => {
+        if (inRoom && room?.id) {
+            navigate(`/room/${room.id}`);
+        }
+    }, [inRoom, room, navigate]);
+
     
     return(
         <>
-            {inRoom? <Room room={room}/> :<JoinRoom/>}
+           <JoinRoom/>
         </>
     )
 }
