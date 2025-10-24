@@ -122,3 +122,16 @@
 body {
   @apply bg-black text-white;
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #2d2d2d;
+  border-radius: 10px;
+}

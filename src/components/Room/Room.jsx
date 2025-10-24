@@ -4,6 +4,8 @@ import socket from "../../socket";
 import Navbar from "../Navbar/Navbar";
 import SpotifySection from "../spotifySection/SpotifySection";
 import YoutubeSection from "../youtubeSection/YoutubeSection";
+import SidebarMenus from "../sidebarMenus/SidebarMenus";
+import ChatSection from "../chatSection/ChatSection";
 
 const Room = ({ room }) => {
   const playerRef = useRef(null);
@@ -90,10 +92,25 @@ const Room = ({ room }) => {
 
 
   return (
-    <>
-        <Navbar setSelectedSection={setSelectedSection}/> 
-        <div>{renderSection()}</div>
-    </>
+   <>
+    <Navbar setSelectedSection={setSelectedSection}/> 
+
+    <div className="flex flex-row h-[90vh] mt-2">
+      
+      <div className="w-[10vw] bg-gray-800 text-white p-2">
+        <SidebarMenus />
+      </div>
+
+      <div className="flex-1 bg-black text-white p-4 overflow-y-auto">
+        {renderSection()}
+      </div>
+
+      <div className="w-[25vw] bg-gray-700 text-white p-4 overflow-y-auto">
+        <ChatSection />
+      </div>
+    </div>
+  </>
+
   );
 };
 

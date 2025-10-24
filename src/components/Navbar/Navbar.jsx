@@ -5,10 +5,15 @@ import DialougeBox from "./DialougeBox"
 
 export default function Navbar({setSelectedSection }) {
   const [open, setOpen] = useState(false)
+  const [logo, setLogo] = useState("/youtube-svgrepo-com.svg");
 
   const handleSelect = (type) => {
-    setSelectedSection(type); // "youtube" or "spotify"
-    setOpen(false); // close the dialog
+    setSelectedSection(type); 
+
+    if (type === "youtube") setLogo("/youtube-svgrepo-com.svg");
+    else if (type === "spotify") setLogo("/Spotify-Icon-Logo.wine.svg");
+
+    setOpen(false);
   };
 
   return (
@@ -17,7 +22,7 @@ export default function Navbar({setSelectedSection }) {
         <div className="text-2xl">Room name</div>
 
         <div>
-          <SearchBox />
+          <SearchBox logo={logo}/>
         </div>
 
         <button
