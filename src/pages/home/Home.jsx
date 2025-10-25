@@ -3,6 +3,8 @@ import JoinRoom from "../../components/joinRoom/JoinRoom";
 import axios from 'axios';
 import Room from "../../components/Room/Room";
 import { useNavigate } from "react-router-dom";
+import React from "react";
+import { BackgroundGradientAnimation } from '../../components/ui/background-gradient-animation';
 
 const Home= ()=>{
     const baseurl= import.meta.env.VITE_REACT_APP_BACKEND_URL;
@@ -36,9 +38,16 @@ const Home= ()=>{
 
     
     return(
-        <>
-           <JoinRoom/>
-        </>
+        <BackgroundGradientAnimation>
+            <div className="brand-logo absolute top-4 left-6 z-50 text-white font-bold text-2xl">
+                Loomiee
+            </div>
+
+            <div>
+                <JoinRoom/>
+            </div>
+
+        </BackgroundGradientAnimation>
     )
 }
 
