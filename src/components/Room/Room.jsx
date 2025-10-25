@@ -98,26 +98,21 @@ const Room = ({ room }) => {
 
 
   return (
-   <>
-    <Navbar setSelectedSection={setSelectedSection}/> 
+    <div className="flex flex-col h-screen overflow-hidden">
+      <Navbar setSelectedSection={setSelectedSection} />
 
-    <div className="flex flex-row h-[90vh] mt-2">
-      
-      <div className="w-[10vw] bg-gray-800 text-white p-2 rounded-r-lg">
-        <SidebarMenus />
+      <div className="flex flex-1 overflow-hidden">
+        <div className="hidden md:block w-52 text-white">
+          <SidebarMenus/>
+        </div>
+        <div className="flex-1 overflow-y-auto">
+          {renderSection()}
+        </div>
+        <div className="hidden lg:flex w-80 bg-gray-700 text-white flex-col">
+          <ChatSection/>
+        </div>
       </div>
-
-      <div className="flex-1 bg-black text-white p-4 overflow-y-auto">
-        {renderSection()}
-      </div>
-
-      <div className="w-[25vw] bg-gray-700 text-white  overflow-y-auto rounded-l-lg flex flex-col h-full">
-        <ChatSection />
-      </div>
-
     </div>
-  </>
-
   );
 };
 

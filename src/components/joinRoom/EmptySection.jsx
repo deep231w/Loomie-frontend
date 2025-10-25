@@ -34,9 +34,7 @@ export function EmptySection() {
 
       if(response.status ===201){
         toast.success("Room created successfully")
-        setTimeout(() => {
         navigate(`/room/${response.data.room.id}`);
-      }, 2000);
       }
     } catch (e) {
       console.log("Error:", e)
@@ -49,6 +47,10 @@ export function EmptySection() {
 
   //enter code to join room 
   async function handleJoinRoomByCode() {
+    if(!roomCode){
+      toast.warning("please enter room code to join the room!")
+      return
+    }
     try{
       const payload={
         userId:user.id,
@@ -81,48 +83,49 @@ export function EmptySection() {
         </div>
       )}
 
-<div className="  rounded-lg bg-white/10 backdrop-blur-none">
-      <Empty className={loading ? "pointer-events-none opacity-40" : ""}>
-        <EmptyHeader>
-          <EmptyMedia variant="icon">
-            <IconHomeExclamation />
-          </EmptyMedia>
-          <EmptyTitle>No Rooms Yet</EmptyTitle>
-          <EmptyDescription>
-            You haven&apos;t created any rooms yet. Get started!
-          </EmptyDescription>
-        </EmptyHeader>
+      <div className="  rounded-lg bg-white/10 backdrop-blur-none">
+            <Empty className={loading ? "pointer-events-none opacity-40" : ""}>
+              <EmptyHeader>
+                <EmptyMedia variant="icon">
+                  <IconHomeExclamation />
+                </EmptyMedia>
+                <EmptyTitle>No Rooms In Yet</EmptyTitle>
+                <EmptyDescription>
+                  You haven&apos;t created any room or joined yet. Get started!
+                  Or you can paste the link on browser your friend shared with you to join the room.
+                </EmptyDescription>
+              </EmptyHeader>
 
-        <EmptyContent>
-          <div className="flex gap-2 flex-col">
-            <Button onClick={handleCreateRoom} disabled={loading}>
-              Create Room
-            </Button>
-            <h2 className="text-white">OR</h2>
-            <div className="flex items-center space-x-2">
-              <Input 
-                type="text" 
-                placeholder="Enter Room Code" 
-                disabled={loading} 
-                value={roomCode}
-                onChange={(e) => setRoomCode(e.target.value)}
-              />
-              <Button 
-                variant="outline" 
-                disabled={loading}
-                onClick={handleJoinRoomByCode}  
-              >
-                Join Room
+              <EmptyContent>
+                <div className="flex gap-2 flex-col">
+                  <Button onClick={handleCreateRoom} disabled={loading}>
+                    Create Room
+                  </Button>
+                  <h2 className="text-white">OR</h2>
+                  <div className="flex items-center space-x-2">
+                    <Input 
+                      type="text" 
+                      placeholder="Enter Room Code" 
+                      disabled={loading} 
+                      value={roomCode}
+                      onChange={(e) => setRoomCode(e.target.value)}
+                    />
+                    <Button 
+                      variant="outline" 
+                      disabled={loading}
+                      onClick={handleJoinRoomByCode}  
+                    >
+                      Join Room
+                    </Button>
+                  </div>
+                </div>
+              </EmptyContent>
+
+              <Button variant="link" className="text-muted-foreground" size="sm">
+                Learn More <ArrowUpRightIcon />
               </Button>
-            </div>
-          </div>
-        </EmptyContent>
-
-        <Button variant="link" className="text-muted-foreground" size="sm">
-          Learn More <ArrowUpRightIcon />
-        </Button>
-      </Empty>
-</div>
+            </Empty>
+      </div>
     </div>
   )
 }

@@ -85,7 +85,6 @@ export default function YoutubeSection({ roomId }) {
         // Normalize results: search returns items with id.videoId
         const items = (searchRes.data.items || []).filter(Boolean);
 
-        // Map to a simple structure (you can extend as needed)
         const mapped = items.map((it) => ({
           videoId: it.id?.videoId,
           title: it.snippet?.title,
@@ -105,8 +104,7 @@ export default function YoutubeSection({ roomId }) {
     fetchRecommendations();
   }, [videoId]);
 
-  // --- YouTube player handlers
-  const opts = { height: "390", width: "920", playerVars: { autoplay: 0 } };
+  const opts = { height: "100%", width: "100%", playerVars: { autoplay: 0 } };
 
   const onReady = (event) => (playerRef.current = event.target);
 
@@ -130,11 +128,9 @@ export default function YoutubeSection({ roomId }) {
     }
   };
 
-  // --- When a suggestion is clicked
   const handleSuggestionClick = (vId) => {
     if (!vId) return;
     setVideoId(vId);
-    // Optionally emit socket event to sync everyone to new video
     socket.emit("change_video", { roomId, videoId: vId });
   };
 
@@ -151,12 +147,17 @@ export default function YoutubeSection({ roomId }) {
 
   return (
     <div className="flex flex-col items-center text-white w-full">
-      <div className="w-full flex justify-center">
+      <div className="w-full max-w-4xl">
         <YouTube
           videoId={videoId}
-          opts={opts}
+          opts={{
+            width: "100%",
+            height: "500",
+            playerVars: { autoplay: 0 },
+          }}
           onReady={onReady}
           onStateChange={onStateChange}
+          className="w-full overflow-hidden"
         />
       </div>
 
@@ -164,20 +165,19 @@ export default function YoutubeSection({ roomId }) {
         {loading ? (
           <div className="text-sm text-gray-400">Loading recommendations...</div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-            {recommendations.map((vid) => (
-              <div
-                key={vid.videoId}
-                className="cursor-pointer transform hover:scale-105 transition p-2 bg-gray-800 rounded"
-                onClick={() => handleSuggestionClick(vid.videoId)}
-              >
-                <img src={vid.thumbnail} alt={vid.title} className="w-full rounded" />
-                <div className="mt-2 text-xs leading-tight">
-                  <div className="font-medium truncate">{vid.title}</div>
-                  <div className="text-gray-400 text-xs truncate">{vid.channelTitle}</div>
+          <div className="w-full max-w-4xl mt-4 px-2">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+              {recommendations.map((vid) => (
+                <div
+                  key={vid.videoId}
+                  className="cursor-pointer bg-gray-800 rounded p-2 hover:scale-105 transition"
+                  onClick={() => handleSuggestionClick(vid.videoId)}
+                >
+                  <img src={vid.thumbnail} className="rounded w-full" />
+                  <p className="text-xs mt-1 truncate">{vid.title}</p>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         )}
       </div>

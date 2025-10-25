@@ -1,4 +1,4 @@
-import { IconDoorExit } from "@tabler/icons-react"
+import { IconDoorExit ,IconShare3} from "@tabler/icons-react"
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -38,17 +38,26 @@ export default function SidebarMenus() {
     }
 
   return (
-    <div className="flex flex-col h-full justify-center items-center">    
-    {loading && (
+    <div className="flex flex-col justify-between items-center h-screen px py-10">
+      {loading && (
         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
           <Spinner className="size-10" />
         </div>
       )}  
-      <button 
-        onClick={()=>handleExitRoom()}
-        className="mt-auto">
-        <IconDoorExit size={30} stroke={2} />
-      </button>
+      <div className="brand-logo  text-white font-bold text-3xl">
+        Loomiee
+      </div>
+      <div className="flex flex-col justify-center items-center gap-4">
+        <button>
+          <IconShare3 size={50} stroke={2}  />
+        </button>
+        <button 
+          onClick={()=>handleExitRoom()}
+          className="mt-auto"
+        >
+            <IconDoorExit size={50} stroke={2} />
+        </button>
+      </div>
     </div>
   )
 }
