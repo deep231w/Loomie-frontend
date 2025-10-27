@@ -98,17 +98,17 @@ const Room = ({ room }) => {
 
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden">
+    <div className="flex flex-col h-screen overflow-hidden gap-1">
       <Navbar setSelectedSection={setSelectedSection} />
 
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden p-2">
         <div className="hidden md:block w-52 text-white">
           <SidebarMenus/>
         </div>
         <div className="flex-1 overflow-y-auto">
           {renderSection()}
         </div>
-        <div className="hidden lg:flex w-80 bg-gray-700 text-white flex-col">
+        <div className="hidden lg:flex w-80 bg-gray-700 text-white flex-col p-2 rounded-lg">
           <ChatSection/>
         </div>
       </div>

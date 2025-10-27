@@ -17,9 +17,9 @@ export default function Navbar({setSelectedSection }) {
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center pt-2">
       <div className="flex flex-row justify-between items-center w-3/5 px-4">
-        <div className="text-2xl">Room name</div>
+        <div className="text-lg">Room name</div>
 
         <div>
           <SearchBox logo={logo}/>
