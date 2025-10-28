@@ -14,13 +14,14 @@ const Room = ({ room }) => {
   const { roomid } = useParams();
   console.log("Joined room:", roomid);
   const videoId = "dQw4w9WgXcQ";
+  const user=JSON.parse(localStorage.getItem('user'));
 
   //check if user in the room or not -
 
   
 
   useEffect(() => {
-    socket.emit("join_room", { roomid });
+    socket.emit("join_room", { roomId:roomid,user:user });
 
     socket.on("sync_state", ({ videoId, currentTime, isPlaying }) => {
       const player = playerRef.current;
@@ -108,7 +109,7 @@ const Room = ({ room }) => {
         <div className="flex-1 overflow-y-auto">
           {renderSection()}
         </div>
-        <div className="hidden lg:flex w-80 bg-gray-700 text-white flex-col p-2 rounded-lg">
+        <div className="hidden lg:flex w-80 bg-gray-700 text-white flex-col  rounded-lg">
           <ChatSection/>
         </div>
       </div>

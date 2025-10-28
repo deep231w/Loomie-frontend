@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { Spinner } from "../ui/spinner";
+import socket from "../../socket";
 
 export default function SidebarMenus() {
 
@@ -26,6 +27,7 @@ export default function SidebarMenus() {
         if(response.status===200){
           console.log("user left successfully");
           toast.success("left room successfylly!!")
+          socket.emit("left_room",{roomId:roomid, user:user})
           navigate('/');
         }
 
